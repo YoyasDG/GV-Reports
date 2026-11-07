@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reports · Grupo Volcanes</title>
+  <meta name="description" content="Reports es la mesa de ayuda de Sistemas de Grupo Volcanes: reporta un problema de TI en segundos y síguelo hasta que quede resuelto.">
+  <link rel="icon" href="img/logo-grupo-volcanes.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:opsz,wght@9..144,600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --surface-000: #f7f4ee; --surface-100: #fffdf9; --surface-200: #ece6dc;
+      --line: #ddd5c8; --line-strong: #8f8476;
+      --ink: #2a211c; --ink-muted: #5f554c;
+      --chambray: #8fa9d6; --chambray-strong: #3d5f9e; --chambray-soft: #dfe7f5; --chambray-ink: #3d5f9e; --on-brand: #ffffff;
+      --coral-soft: #f8e0dc; --coral-ink: #a73a32;
+      --straw: #d4bf93; --straw-soft: #f3ead6; --straw-ink: #7a581b;
+      --teal-soft: #dcefef; --teal-ink: #256a72;
+      --shadow-pop: 0 8px 24px rgba(42, 33, 28, 0.12);
+      --display: Fraunces, Georgia, serif;
+      --sans: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+      --mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+      color-scheme: light;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --surface-000: #191b20; --surface-100: #22252c; --surface-200: #2b2f37;
+        --line: #3a3f49; --line-strong: #7c8494;
+        --ink: #f3eee6; --ink-muted: #b4aca1;
+        --chambray: #7d98c8; --chambray-strong: #9db8e6; --chambray-soft: #263248; --chambray-ink: #b9cdf0; --on-brand: #14161b;
+        --coral-soft: #3d2526; --coral-ink: #f5a59c;
+        --straw: #b9a476; --straw-soft: #36302a; --straw-ink: #e6c98a;
+        --teal-soft: #1f3436; --teal-ink: #9fd6dc;
+        --shadow-pop: 0 8px 24px rgba(0, 0, 0, 0.45);
+        color-scheme: dark;
+      }
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--surface-000); color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 24px; -webkit-font-smoothing: antialiased; }
+    a { color: var(--chambray-strong); }
+    a:hover { color: var(--ink); }
+    :focus-visible { outline: 2px solid var(--chambray-strong); outline-offset: 2px; }
+    img { max-width: 100%; height: auto; display: block; }
+    h1, h2, h3, p { margin: 0; }
+
+    .wrap { width: 100%; max-width: 1120px; margin: 0 auto; padding: 0 16px; }
+    .stripes { height: 12px; background-color: var(--chambray); background-image: repeating-linear-gradient(90deg, var(--surface-000) 0 4px, transparent 4px 12px); }
+    .label { font-size: 12px; line-height: 16px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
+    .muted { color: var(--ink-muted); }
+    .mono { font-family: var(--mono); font-size: 13px; font-weight: 500; }
+
+    /* Encabezado */
+    header.top { background: var(--surface-100); border-bottom: 1px solid var(--line); }
+    header.top .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; padding-top: 12px; padding-bottom: 12px; }
+    .brand { display: flex; align-items: center; gap: 12px; color: var(--ink); text-decoration: none; }
+    .brand img { width: 44px; height: auto; }
+    .brand-logo { background: #fff; border-radius: 12px; padding: 4px; }
+    .brand b { font-family: var(--display); font-weight: 600; font-size: 22px; line-height: 28px; display: block; }
+    .brand span { font-size: 13px; line-height: 18px; color: var(--ink-muted); display: block; }
+    nav.links { display: flex; flex-wrap: wrap; gap: 4px; }
+    nav.links a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 12px; border-radius: 10px; color: var(--ink); text-decoration: none; font-weight: 500; }
+    nav.links a:hover { background: var(--surface-200); }
+
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 0 20px; border-radius: 10px; border: 1px solid var(--line-strong); background: var(--surface-100); color: var(--ink); font: inherit; font-weight: 600; text-decoration: none; }
+    .btn:hover { background: var(--surface-200); color: var(--ink); }
+    .btn-primary { background: var(--chambray-strong); border-color: var(--chambray-strong); color: var(--on-brand); }
+    .btn-primary:hover { background: var(--chambray-strong); color: var(--on-brand); filter: brightness(1.08); }
+
+    /* Hero */
+    .hero { padding: 64px 0 48px; }
+    .hero .wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 48px; }
+    .hero-copy { flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 24px; }
+    .hero-logo { width: 140px; background: #fff; border-radius: 24px; padding: 12px 16px; border: 1px solid var(--line); }
+    .hero h1 { font-family: var(--display); font-weight: 600; font-size: 52px; line-height: 56px; letter-spacing: -0.02em; }
+    .hero p.lead { font-size: 19px; line-height: 28px; color: var(--ink-muted); max-width: 34em; }
+    .hero .ctas { display: flex; flex-wrap: wrap; gap: 12px; }
+    .hero-shot { flex: 1 1 360px; min-width: 0; display: flex; justify-content: center; }
+    @media (max-width: 560px) { .hero { padding-top: 40px; } .hero h1 { font-size: 38px; line-height: 42px; } }
+
+    /* Marco de ventana para capturas */
+    .window { width: 100%; background: var(--surface-100); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-pop); }
+    .window .bar { display: flex; align-items: center; gap: 6px; padding: 10px 14px; border-bottom: 1px solid var(--line); background: var(--surface-200); }
+    .window .bar i { width: 10px; height: 10px; border-radius: 999px; background: var(--line-strong); opacity: .5; }
+    .window .bar span { margin-left: 8px; font-size: 12px; line-height: 16px; color: var(--ink-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .window.phone { max-width: 400px; }
+
+    section { padding: 64px 0; }
+    section.alt { background: var(--surface-100); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .section-head { display: flex; flex-direction: column; gap: 12px; max-width: 44em; margin-bottom: 32px; }
+    .section-head h2 { font-family: var(--display); font-weight: 600; font-size: 34px; line-height: 40px; letter-spacing: -0.01em; }
+    .section-head p { font-size: 17px; line-height: 26px; color: var(--ink-muted); }
+    .eyebrow { color: var(--chambray-ink); }
+
+    /* Antes / ahora */
+    .compare { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+    .compare .card { border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 12px; border: 1px solid var(--line); background: var(--surface-000); }
+    .compare .card.now { background: var(--chambray-soft); border-color: transparent; }
+    .compare .card.now .label { color: var(--chambray-ink); }
+    .compare ul { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; }
+
+    /* Pasos */
+    .steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+    .steps li { background: var(--surface-100); border: 1px solid var(--line); border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 12px; }
+    .steps .num { width: 40px; height: 40px; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-weight: 600; }
+    .n1 { background: var(--chambray-soft); color: var(--chambray-ink); }
+    .n2 { background: var(--straw-soft); color: var(--straw-ink); }
+    .n3 { background: var(--teal-soft); color: var(--teal-ink); }
+    .steps h3 { font-size: 18px; line-height: 26px; font-weight: 600; }
+
+    /* Funciones con captura */
+    .feature { display: flex; flex-wrap: wrap; gap: 48px; align-items: center; }
+    .feature + .feature { margin-top: 64px; }
+    .feature .copy { flex: 1 1 360px; min-width: 0; display: flex; flex-direction: column; gap: 16px; }
+    .feature .shot { flex: 1.3 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 16px; align-items: center; }
+    .feature.reverse .copy { order: 2; }
+    @media (max-width: 860px) { .feature.reverse .copy { order: 0; } }
+    .feature h3 { font-family: var(--display); font-weight: 600; font-size: 28px; line-height: 34px; letter-spacing: -0.01em; }
+    .checks { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+    .checks li { display: flex; gap: 12px; align-items: flex-start; }
+    .checks svg { flex: none; margin-top: 2px; color: var(--teal-ink); }
+    .pill { display: inline-flex; align-self: flex-start; padding: 2px 10px; border-radius: 999px; }
+    .pill-blue { background: var(--chambray-soft); color: var(--chambray-ink); }
+    .pill-straw { background: var(--straw-soft); color: var(--straw-ink); }
+
+    /* Ficha técnica */
+    .specs { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+    .spec { background: var(--surface-000); border: 1px solid var(--line); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 6px; }
+    .spec b { font-size: 17px; }
+
+    pre { margin: 0; background: #22252c; color: #f3eee6; border-radius: 16px; padding: 20px 24px; overflow-x: auto; font-family: var(--mono); font-size: 14px; line-height: 22px; }
+    pre .c { color: #b4aca1; }
+    .install { display: flex; flex-wrap: wrap; gap: 32px; }
+    .install > div { flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 16px; }
+    .install ol { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 10px; }
+
+    footer { padding: 32px 0 48px; border-top: 1px solid var(--line); }
+    footer .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; font-size: 14px; color: var(--ink-muted); }
+  </style>
+</head>
+<body>
+  <div class="stripes" aria-hidden="true"></div>
+  <header class="top">
+    <div class="wrap">
+      <a class="brand" href="#">
+        <span class="brand-logo"><img src="img/logo-grupo-volcanes.png" alt="Grupo Volcanes" width="44" height="49"></span>
+        <span><b>Reports</b><span>Grupo Volcanes · Sistemas</span></span>
+      </a>
+      <nav class="links" aria-label="Secciones">
+        <a href="#como-funciona">Cómo funciona</a>
+        <a href="#empleados">Empleados</a>
+        <a href="#sistemas">Sistemas</a>
+        <a href="#instalacion">Instalación</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <div class="hero">
+      <div class="wrap">
+        <div class="hero-copy">
+          <img class="hero-logo" src="img/logo-grupo-volcanes.png" alt="Logotipo de Grupo Volcanes" width="140" height="157">
+          <h1>¿Algo no funciona? Repórtalo en segundos.</h1>
+          <p class="lead"><strong>Reports</strong> es la mesa de ayuda de Sistemas de Grupo Volcanes. Ya no hace falta llamar a la extensión, al celular ni mandar WhatsApp: escribes una frase o tomas una foto, y tu reporte queda en la fila con folio, prioridad y tiempo estimado.</p>
+          <div class="ctas">
+            <a class="btn btn-primary" href="#como-funciona">Ver cómo funciona</a>
+            <a class="btn" href="https://github.com/YoyasDG/GV-Reports">Código en GitHub</a>
+          </div>
+        </div>
+        <div class="hero-shot">
+          <figure class="window phone" style="margin:0">
+            <div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>Reportar a Sistemas</span></div>
+            <img src="img/reporte.jpg" alt="Pantalla “¿Cuál es tu problema?”: botones de problemas comunes, campo de texto, foto adjunta, opción “No puedo trabajar” y botón Enviar a Sistemas." width="640" height="860">
+          </figure>
+        </div>
+      </div>
+    </div>
+
+    <!-- Antes / ahora -->
+    <section class="alt" aria-labelledby="por-que">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="label eyebrow">Por qué</span>
+          <h2 id="por-que">Un solo lugar para todo lo que llega a Sistemas</h2>
+          <p>El ritmo de trabajo es rápido y nadie tiene tiempo de llenar formularios. Reports respeta eso: reportar toma lo mismo que mandar un mensaje, pero nada se pierde entre llamadas y chats.</p>
+        </div>
+        <div class="compare">
+          <div class="card">
+            <span class="label muted">Antes</span>
+            <ul>
+              <li>Llamadas a la extensión, al celular y mensajes de WhatsApp al mismo tiempo.</li>
+              <li>Pendientes que se olvidan o se atienden en desorden.</li>
+              <li>La persona no sabe cuándo la van a atender.</li>
+            </ul>
+          </div>
+          <div class="card now">
+            <span class="label">Con Reports</span>
+            <ul>
+              <li>Todo entra a una sola bandeja, con folio y el equipo de quien reporta.</li>
+              <li>Lo urgente (“No puedo trabajar”) pasa al frente de la fila.</li>
+              <li>Cada persona ve su tiempo estimado y los avances desde su escritorio.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cómo funciona -->
+    <section id="como-funciona" aria-labelledby="como-title">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="label eyebrow">Cómo funciona</span>
+          <h2 id="como-title">Reportar y seguir. Nada más.</h2>
+        </div>
+        <ol class="steps">
+          <li>
+            <span class="num n1" aria-hidden="true">1</span>
+            <h3>Abre el acceso directo</h3>
+            <p class="muted">“Reportar a Sistemas” está en el escritorio de cada computadora. Se abre en su propia ventana, sin usuario ni contraseña.</p>
+          </li>
+          <li>
+            <span class="num n2" aria-hidden="true">2</span>
+            <h3>Cuéntalo en una frase o una foto</h3>
+            <p class="muted">Toca un problema común, escribe como en WhatsApp o pega una captura con <span class="mono">Ctrl+V</span>. Envía y listo: recibes tu folio.</p>
+          </li>
+          <li>
+            <span class="num n3" aria-hidden="true">3</span>
+            <h3>Sistemas te da un horario</h3>
+            <p class="muted">El administrador asigna el tiempo estimado en un clic. Tú lo ves en “Mis reportes” junto con sus mensajes, hasta que quede resuelto.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Funciones -->
+    <section class="alt" aria-label="Funciones">
+      <div class="wrap">
+        <div class="feature" id="empleados">
+          <div class="copy">
+            <span class="label pill pill-blue">Para empleados</span>
+            <h3>Saber en qué va tu reporte, sin llamar</h3>
+            <ul class="checks">
+              <li><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 10.5l3.5 3.5 7.5-8"></path></svg><span>Lugar en la fila y tiempo estimado: “Te atendemos hoy antes de la 1:30 p.m.”.</span></li>
+              <li><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 10.5l3.5 3.5 7.5-8"></path></svg><span>Mensajes de Sistemas en el mismo reporte.</span></li>
+              <li><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 10.5l3.5 3.5 7.5-8"></path></svg><span>Si algo vuelve a fallar, se reabre el reporte con un clic.</span></li>
+              <li><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 10.5l3.5 3.5 7.5-8"></path></svg><span>La computadora recuerda quién eres; solo das tu nombre la primera vez.</span></li>
+            </ul>
+          </div>
+          <div class="shot">
+            <figure class="window phone" style="margin:0">
+              <div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>Mis reportes</span></div>
+              <img src="img/mis-reportes.jpg" alt="Pantalla “Mis reportes”: un reporte en fila con la etiqueta No puedo trabajar y otro en progreso con su hora estimada y un mensaje de Sistemas." width="640" height="600" loading="lazy">
+            </figure>
+          </div>
+        </div>
+
+        <div class="feature reverse" id="sistemas">
+          <div class="copy">
+            <span class="label pill pill-straw">Para Sistemas</span>
+            <h3>Una bandeja ordenada por lo que más urge</h3>
+            <ul class="checks">
+              <li><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 10.5l3.5 3.5 7.5-8"></path></svg><span>Contadores de abiertos, sin tiempo estimado, que vencen hoy y resueltos de la semana.</span></li>
+              <li><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 10.5l3.5 3.5 7.5-8"></path></svg><span>Tiempo estimado en un clic (30 min a 3 días) y vista previa de lo que verá el empleado.</span></li>
+              <li><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 10.5l3.5 3.5 7.5-8"></path></svg><span>Fotos, historial, respuestas y notas internas en cada reporte.</span></li>
+              <li><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 10.5l3.5 3.5 7.5-8"></path></svg><span>Aviso con sonido y notificación de escritorio cuando llega algo nuevo.</span></li>
+            </ul>
+          </div>
+          <div class="shot">
+            <figure class="window" style="margin:0">
+              <div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>Reports · Administración</span></div>
+              <img src="img/bandeja.jpg" alt="Bandeja del administrador con contadores y una tabla de reportes: folio, reporte, quién, estado y botón Asignar tiempo." width="1280" height="860" loading="lazy">
+            </figure>
+            <figure class="window" style="margin:0">
+              <div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>Atender reporte</span></div>
+              <img src="img/atender.jpg" alt="Detalle de un reporte: descripción con foto, actividad y panel Atención con estado, responsable y tiempo estimado." width="1280" height="860" loading="lazy">
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ficha técnica -->
+    <section aria-labelledby="tech-title">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="label eyebrow">Bajo el capó</span>
+          <h2 id="tech-title">Ligero y hecho para la red interna</h2>
+          <p>Corre en cualquier PC o servidor de la oficina. No depende de servicios en la nube ni de licencias.</p>
+        </div>
+        <div class="specs">
+          <div class="spec"><b>Node.js 22+</b><span class="muted">Sin dependencias externas: no hay que ejecutar <span class="mono">npm install</span>.</span></div>
+          <div class="spec"><b>SQLite</b><span class="muted">Base de datos y fotos en una sola carpeta <span class="mono">data/</span>, fácil de respaldar.</span></div>
+          <div class="spec"><b>Acceso directo</b><span class="muted">Un script de PowerShell lo crea en cada PC con el nombre del equipo.</span></div>
+          <div class="spec"><b>Seguro por defecto</b><span class="muted">Contraseñas con scrypt, cookies firmadas y solo imágenes en los adjuntos.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Instalación -->
+    <section class="alt" id="instalacion" aria-labelledby="install-title">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="label eyebrow">Instalación</span>
+          <h2 id="install-title">En marcha en 10 minutos</h2>
+        </div>
+        <div class="install">
+          <div>
+            <h3 style="font-size:18px;line-height:26px">1. En el servidor</h3>
+            <pre><code>git clone https://github.com/YoyasDG/GV-Reports.git
+cd GV-Reports
+copy .env.example .env   <span class="c"># usuario y contraseña de admin</span>
+npm start</code></pre>
+            <p class="muted">Empleados: <span class="mono">http://servidor:3000/</span> · Administrador: <span class="mono">http://servidor:3000/admin</span></p>
+          </div>
+          <div>
+            <h3 style="font-size:18px;line-height:26px">2. En cada computadora</h3>
+            <pre><code>powershell -ExecutionPolicy Bypass ^
+  -File scripts\crear-acceso-directo.ps1 ^
+  -Servidor "http://192.168.1.10:3000"</code></pre>
+            <p class="muted">Crea “Reportar a Sistemas” en el escritorio. Con <span class="mono">-TodosLosUsuarios</span> queda para todos los usuarios de esa PC. Los detalles están en el <a href="https://github.com/YoyasDG/GV-Reports#readme">README</a>.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>Reports · Grupo Volcanes · Departamento de Sistemas</span>
+      <a href="https://github.com/YoyasDG/GV-Reports">github.com/YoyasDG/GV-Reports</a>
+    </div>
+  </footer>
+</body>
+</html>

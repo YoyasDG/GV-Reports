@@ -62,6 +62,10 @@ El script crea **“Reportar a Sistemas”** en el escritorio. Abre Reports en u
 
 Todo vive en la carpeta `data/`: la base de datos `reports.db`, las fotos en `uploads/` y el secreto de sesión `.secret`. Respáldala con regularidad. Esta carpeta no se sube al repositorio.
 
+## Página de presentación (GitHub Pages)
+
+La carpeta `docs/` tiene una landing estática que explica el sistema. Para publicarla, en GitHub ve a **Settings → Pages** y elige **Deploy from a branch**, con la rama `main` y la carpeta `/docs`.
+
 ## Desarrollo
 
 ```bash
