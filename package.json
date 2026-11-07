@@ -1,0 +1,17 @@
+{
+  "name": "gv-reports",
+  "version": "1.0.0",
+  "description": "Reports · Grupo Volcanes — reportes rápidos de soporte de TI",
+  "private": true,
+  "main": "src/server.js",
+  "engines": {
+    "node": ">=22.13"
+  },
+  "scripts": {
+    "start": "node --no-warnings=ExperimentalWarning src/server.js",
+    "dev": "node --no-warnings=ExperimentalWarning --watch src/server.js",
+    "admin": "node --no-warnings=ExperimentalWarning scripts/admin.js",
+    "test": "node --no-warnings=ExperimentalWarning --test test/*.test.js"
+  },
+  "license": "UNLICENSED"
+}

@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reports · Grupo Volcanes</title>
+  <meta name="description" content="Reporta un problema a Sistemas en segundos.">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/styles.css">
+  <script src="/js/common.js" defer></script>
+  <script src="/js/report.js" defer></script>
+</head>
+<body>
+  <div class="stripes" aria-hidden="true"></div>
+  <header class="topbar">
+    <a class="brand" href="/"><b>Reports</b><span>Grupo Volcanes</span></a>
+    <div class="who" id="who" hidden>
+      <span id="who-text"></span>
+      <button type="button" class="btn-link" id="who-change">¿No eres tú?</button>
+    </div>
+  </header>
+
+  <main class="emp-main">
+    <!-- Primera vez: ¿quién eres? -->
+    <section id="view-setup" class="stack" hidden aria-labelledby="setup-title">
+      <div class="stack-sm">
+        <h1 id="setup-title" class="display">Hola. ¿Quién eres?</h1>
+        <p class="muted" style="margin:0">Solo te lo preguntamos una vez en esta computadora.</p>
+      </div>
+      <form id="setup-form" class="stack" novalidate>
+        <div class="field">
+          <label class="label" for="setup-name">Tu nombre</label>
+          <input class="input" id="setup-name" name="name" autocomplete="name" required maxlength="80" placeholder="Ej. Laura Méndez">
+        </div>
+        <div class="field">
+          <label class="label" for="setup-area">Área</label>
+          <input class="input" id="setup-area" name="area" maxlength="80" placeholder="Ej. Contabilidad" list="areas">
+          <datalist id="areas">
+            <option value="Administración"><option value="Contabilidad"><option value="Compras"><option value="Ventas">
+            <option value="Recursos Humanos"><option value="Almacén"><option value="Producción"><option value="Dirección">
+          </datalist>
+        </div>
+        <div class="field">
+          <label class="label" for="setup-host">Equipo <span class="muted-sm">(opcional)</span></label>
+          <input class="input mono" id="setup-host" name="hostname" maxlength="63" placeholder="Ej. CONT-PC-07">
+        </div>
+        <div id="setup-error" class="notice notice-error" role="alert" hidden></div>
+        <button class="btn btn-primary btn-lg" type="submit">Continuar</button>
+      </form>
+    </section>
+
+    <!-- Reporte rápido -->
+    <section id="view-report" class="stack" hidden aria-labelledby="report-title">
+      <h1 id="report-title" class="display">¿Cuál es tu problema?</h1>
+      <div class="row" id="quick" role="group" aria-label="Problemas comunes"></div>
+      <div class="field">
+        <label for="desc" class="sr-only">Describe el problema</label>
+        <textarea id="desc" class="textarea textarea-lg" rows="4" maxlength="4000" placeholder="Escríbelo como lo dirías por WhatsApp. Ej. “No me abre el correo”."></textarea>
+      </div>
+      <div class="row">
+        <label class="btn" for="photo-input">
+          <span id="cam-icon"></span>Foto o captura
+        </label>
+        <input id="photo-input" class="sr-only" type="file" accept="image/*" multiple>
+        <span class="muted-sm">o pega una captura con <kbd>Ctrl+V</kbd></span>
+      </div>
+      <div class="thumbs" id="thumbs" hidden></div>
+      <button type="button" class="blocked-toggle" id="blocked" aria-pressed="false">
+        <span class="box" aria-hidden="true">✓</span>
+        <span class="stack-sm" style="gap:2px">
+          <span style="font-weight:600">No puedo trabajar</span>
+          <span class="muted-sm">Lo pasamos al frente de la fila.</span>
+        </span>
+      </button>
+      <div id="report-error" class="notice notice-error" role="alert" hidden></div>
+      <div class="stack-sm">
+        <button type="button" class="btn btn-primary btn-lg" id="send">Enviar a Sistemas</button>
+        <div class="row-between muted-sm">
+          <span>Con una frase basta. <kbd>Ctrl+Enter</kbd> para enviar.</span>
+          <a href="#mis-reportes" id="link-mine">Ver mis reportes</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Enviado -->
+    <section id="view-sent" class="stack" hidden aria-labelledby="sent-title" role="status">
+      <div class="check-circle" id="sent-icon"></div>
+      <div class="stack-sm">
+        <h1 id="sent-title" class="display">¡Recibido! Ya lo tenemos.</h1>
+        <p class="muted" style="margin:0">Tu reporte está en la fila de Sistemas. Cuando te asignemos un horario lo verás en “Mis reportes”.</p>
+      </div>
+      <div class="card facts">
+        <div><span class="label muted">Folio</span><span class="mono" style="font-size:18px;line-height:26px" id="sent-folio"></span></div>
+        <div><span class="label muted">Lugar en la fila</span><span class="heading" id="sent-queue"></span></div>
+        <div><span class="label muted">Tiempo estimado</span><span><span class="badge b-en_progreso">Por asignar</span></span></div>
+      </div>
+      <div class="row">
+        <a class="btn btn-primary" href="#mis-reportes">Ver mis reportes</a>
+        <button type="button" class="btn" id="again">Reportar otra cosa</button>
+      </div>
+      <p class="muted-sm" style="margin:0">Ya puedes cerrar esta ventana.</p>
+    </section>
+
+    <!-- Mis reportes -->
+    <section id="view-mine" class="stack" hidden aria-labelledby="mine-title">
+      <div class="row-between">
+        <h1 id="mine-title" class="title">Mis reportes</h1>
+        <a class="btn btn-primary" href="#" id="new-report"><span id="plus-icon"></span>Nuevo reporte</a>
+      </div>
+      <div id="mine-list" class="stack-sm" style="gap:12px" aria-live="polite"></div>
+      <p class="muted-sm" style="margin:0;padding-top:16px;border-top:1px solid var(--line)">¿Se cayó algo para todo el equipo? Repórtalo con “No puedo trabajar” y entra al frente de la fila.</p>
+    </section>
+
+    <!-- Detalle de un reporte -->
+    <section id="view-detail" class="stack" hidden aria-labelledby="detail-title">
+      <a href="#mis-reportes" class="muted-sm">← Mis reportes</a>
+      <div id="detail-body" class="stack"></div>
+    </section>
+  </main>
+</body>
+</html>

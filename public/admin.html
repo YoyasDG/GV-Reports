@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reports · Administración</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/styles.css">
+  <script src="/js/common.js" defer></script>
+  <script src="/js/admin.js" defer></script>
+</head>
+<body>
+  <!-- Login -->
+  <div id="view-login" class="login-wrap" hidden>
+    <div class="login-card">
+      <div class="stripes" aria-hidden="true" style="height:48px"></div>
+      <form id="login-form" novalidate>
+        <div class="stack-sm">
+          <div class="brand"><b>Reports</b><span>Grupo Volcanes · Administración</span></div>
+          <h1 class="title">Inicia sesión</h1>
+        </div>
+        <div class="field">
+          <label class="label" for="login-user">Usuario</label>
+          <input class="input" id="login-user" autocomplete="username" required>
+        </div>
+        <div class="field">
+          <label class="label" for="login-pass">Contraseña</label>
+          <input class="input" id="login-pass" type="password" autocomplete="current-password" required>
+        </div>
+        <div id="login-error" class="notice notice-error" role="alert" hidden></div>
+        <div id="login-setup" class="notice notice-error" hidden>Aún no hay administradores. En el servidor ejecuta <span class="mono">npm run admin -- crear usuario "Nombre"</span>.</div>
+        <button class="btn btn-primary" type="submit">Entrar</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- App -->
+  <div id="view-app" class="adm" hidden>
+    <aside class="adm-side">
+      <a class="brand" href="#"><b>Reports</b><span class="label">Admin</span></a>
+      <nav aria-label="Vistas" id="nav"></nav>
+      <div class="stack-sm" style="margin-top:auto">
+        <button type="button" class="btn btn-sm" id="notify-btn" hidden>Activar avisos de escritorio</button>
+        <div class="row" style="gap:12px">
+          <div class="avatar av-adm" id="me-avatar" aria-hidden="true" style="width:40px;height:40px"></div>
+          <div class="stack-sm" style="gap:0">
+            <span style="font-weight:600" id="me-name"></span>
+            <button type="button" class="btn-link" id="logout" style="align-self:flex-start">Cerrar sesión</button>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="adm-main">
+      <!-- Bandeja -->
+      <section id="view-list" class="stack" hidden>
+        <div class="row-between" style="align-items:flex-end">
+          <div class="stack-sm" style="gap:4px">
+            <h1 class="title" id="list-title">Abiertos</h1>
+            <p class="muted" style="margin:0" id="list-sub"></p>
+          </div>
+          <div class="field" style="min-width:240px;gap:4px">
+            <label class="label" for="search">Buscar</label>
+            <input class="input" id="search" type="search" placeholder="Folio, texto, persona o equipo">
+          </div>
+        </div>
+        <div class="kpis" id="kpis"></div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col" class="label">Folio</th>
+                <th scope="col" class="label">Reporte</th>
+                <th scope="col" class="label">Quién</th>
+                <th scope="col" class="label">Estado</th>
+                <th scope="col" class="label">Tiempo estimado</th>
+                <th scope="col" class="label">Recibido</th>
+              </tr>
+            </thead>
+            <tbody id="rows"></tbody>
+          </table>
+          <div id="rows-empty" class="empty" hidden>Todo en orden por aquí.</div>
+        </div>
+      </section>
+
+      <!-- Detalle -->
+      <section id="view-detail" class="stack" hidden></section>
+    </main>
+  </div>
+</body>
+</html>
